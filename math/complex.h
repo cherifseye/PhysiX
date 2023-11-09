@@ -12,8 +12,13 @@ public:
     Complex operator*(const Complex& c);
     Complex operator/(const Complex& c);
     Complex conjugate() const;
-    bool operator==(const Complex& c);
-    bool operator!=(const Complex& c);
+    void rotation2D(float angle);
+    void operator+=(Complex& c);
+    void operator-=(Complex& c);
+    void operator*=(float R);
+    void operator/=(float R);
+    bool operator==(const Complex& c) const;
+    bool operator!=(const Complex& c) const;
     float argument();
     float module();
     friend std::ostream& operator<<(std::ostream& os, const Complex& c);

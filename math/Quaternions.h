@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <cmath>
 class Quat{
 
 public:
@@ -12,6 +13,12 @@ public:
    bool operator!=(const Quat& q) const;
    float getA() const {return a;};
    float getB() const {return b;};
+   float getC() const {return c;};
+   float getD() const {return d;};
+   Quat Conjugate() const{return Quat(a, -b, -c, -d);};
+   Quat Inverse();
+   float norm() const {return sqrt(a*a + b*b + c*c + d*d);};
+
    friend std::ostream& operator<<(std::ostream& os, const Quat& q);
    
 protected:

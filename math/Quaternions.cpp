@@ -39,15 +39,20 @@ void Quat::operator=(const Quat& q){
     c = q.c;
     d = q.d;
 }
+Quat Quat::Inverse(){
+    Quat q2 = Conjugate();
+    float module = norm() * norm();
+    return Quat(q2.a/module, q2.b/module, q2.c/module, q2.d/module);
+}
 std::ostream& operator<<(std::ostream& os, const Quat& q) {
     auto signPrinter = [](float value, std::ostream& os){
         os << (value >= 0 ? " + " : " - ");
     };
     
     os << q.a;
-    signPrinter(q.b, os); os << abs(q.b) << "i";
-    signPrinter(q.c, os); os << abs(q.c) << "j";
-    signPrinter(q.d, os); os << abs(q.d) << "k";
+    signPrinter(q.b, os); os << fabs(q.b) << "i";
+    signPrinter(q.c, os); os << fabs(q.c) << "j";
+    signPrinter(q.d, os); os << fabs(q.d) << "k";
     
     return os;
 }
