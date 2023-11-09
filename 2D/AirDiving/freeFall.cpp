@@ -109,6 +109,11 @@ int main(){
 
             }
         }
+        if (Keyboard::isKeyPressed(Keyboard::Tab)){
+            if (!paused){
+                paused = true;
+            }
+        }
         if (!paused){
             if (tenisTime < tmaxTenis){
                 ballTenisPos = (V0Tennis*Ttennis*log(coshf(tenisTime / Ttennis))*mm) / scale;
