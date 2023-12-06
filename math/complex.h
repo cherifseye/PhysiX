@@ -1,6 +1,8 @@
 #pragma once
 #include "Quaternions.h"
 
+using namespace PhysiX;
+
 class Complex : public Quat {
 public:
 
