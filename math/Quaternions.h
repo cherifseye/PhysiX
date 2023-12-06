@@ -1,6 +1,10 @@
 #pragma once
 #include <iostream>
 #include <cmath>
+
+using namespace std;
+namespace PhysiX
+{
 class Quat{
 
 public:
@@ -11,6 +15,10 @@ public:
    void operator=(const Quat& q);
    bool operator==(const Quat& q) const;
    bool operator!=(const Quat& q) const;
+   void operator+=(Quat& q);
+   void operator-=(Quat& q);
+   void operator*=(float R);
+   void operator/=(float R);
    float getA() const {return a;};
    float getB() const {return b;};
    float getC() const {return c;};
@@ -18,12 +26,14 @@ public:
    Quat Conjugate() const{return Quat(a, -b, -c, -d);};
    Quat Inverse();
    float norm() const {return sqrt(a*a + b*b + c*c + d*d);};
+   Quat Rotation3d(Quat& axis, float angle);
 
    friend std::ostream& operator<<(std::ostream& os, const Quat& q);
-   
+
 protected:
     float a;
     float b;
     float c;
     float d;
 };
+}
