@@ -1,8 +1,8 @@
 #include <iostream>
 #include "Quaternions.h"
 
-using namespace std;
 
+using namespace PhysiX;
 Quat:: Quat(float x, float y, float z, float k){
     a = x;
     b = y;
@@ -39,20 +39,72 @@ void Quat::operator=(const Quat& q){
     c = q.c;
     d = q.d;
 }
+
+void Quat::operator*=(float R)
+{
+    a*= R;
+    b*= R;
+    c*= R;
+    d*= R;
+}
+
+void Quat::operator+=(Quat& q)
+{
+    a += q.a;
+    b += q.b;
+    c += q.c;
+    d += q.d;
+}
+
+void Quat::operator-=(Quat& q)
+{
+    a -= q.a;
+    b -= q.b;
+    c -= q.c;
+    d -= q.d;
+}
+
+void Quat::operator/=(float R)
+{
+    a /= R;
+    b /= R;
+    c /= R;
+    d /= R;
+    
+}
 Quat Quat::Inverse(){
     Quat q2 = Conjugate();
     float module = norm() * norm();
     return Quat(q2.a/module, q2.b/module, q2.c/module, q2.d/module);
 }
+
+Quat Quat::Rotation3d(Quat& axis, float angle)
+{
+    //Reduce axis vector in a vector of a unit lenght if it's not;
+    float axisMagnitude = axis.norm();
+    if (axisMagnitude != 1)
+    {
+        axis /= axisMagnitude;
+    }
+    float angletoRad = (angle * M_PI) / 180.0f;
+    axis *= sin(angletoRad/2);
+    Quat q = {cosf(angletoRad/2)};
+    q += axis;
+    Quat P_prime = q * (*this) * q.Inverse();
+    return P_prime; // New vector after the rotation;
+}
+
+namespace PhysiX{
 std::ostream& operator<<(std::ostream& os, const Quat& q) {
     auto signPrinter = [](float value, std::ostream& os){
         os << (value >= 0 ? " + " : " - ");
     };
     
-    os << q.a;
-    signPrinter(q.b, os); os << fabs(q.b) << "i";
-    signPrinter(q.c, os); os << fabs(q.c) << "j";
-    signPrinter(q.d, os); os << fabs(q.d) << "k";
+    os << q.getA();
+    signPrinter(q.getB(), os); os << fabs(q.getB()) << "i";
+    signPrinter(q.getC(), os); os << fabs(q.getC()) << "j";
+    signPrinter(q.getD(), os); os << fabs(q.getD()) << "k";
     
     return os;
+}
 }
