@@ -3,7 +3,7 @@
 #include <iostream>
 
 Complex::Complex(float a, float b) : Quat(a, b) {}
-
+using namespace PhysiX;
 
 Complex  Complex:: operator+(const Complex& c){
     return Complex(a + c.a, b+c.b);
